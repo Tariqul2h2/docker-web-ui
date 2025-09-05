@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Login</h2>
+<form method="post">
+  <div class="mb-3">
+    <input class="form-control" name="username" placeholder="Username">
+  </div>
+  <div class="mb-3">
+    <input type="password" class="form-control" name="password" placeholder="Password">
+  </div>
+  <button class="btn btn-primary">Login</button>
+</form>
+{% if error %}
+<p class="text-danger mt-2">{{ error }}</p>
+{% endif %}
+{% endblock %}
+

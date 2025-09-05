@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Docker Container Web Manager</h2>
+<p><a href="{{ url_for('logout') }}">Logout</a></p>
+
+<h4>Containers</h4>
+<table class="table table-bordered" id="container-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Image</th>
+      <th>Ports</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+{% if role == "admin" %}
+<div class="mt-4">
+  <h4>Create Container</h4>
+  <input id="image" placeholder="Image (e.g. nginx)" class="form-control mb-2">
+  <input id="version" placeholder="Version/Tag (optional, e.g. latest)" class="form-control mb-2">
+  <input id="name" placeholder="Name (optional)" class="form-control mb-2">
+  <input id="ports" placeholder="Ports (optional, e.g. 8080:80,2222:22)" class="form-control mb-2">
+  <button class="btn btn-success" onclick="createContainer()">Create</button>
+</div>
+{% endif %}
+
+<h4 class="mt-5">Images</h4>
+<table class="table table-bordered" id="images-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tags</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+    const userRole = "{{ role }}";
+</script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+
+{% endblock %}

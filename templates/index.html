@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Docker Web UI</title>
+  </head>
+  <body>
+    <h1>Docker Web Manager</h1>
+    <p>This is a minimal UI. </p>
+    <pre>
+    Endpoints:
+    POST /api/login {username,password} -> token
+    GET /api/containers?all=true -> list containers
+    POST /api/containers/create -> create (admin)
+    POST /api/containers/{id}/start
+    POST /api/containers/{id}/stop
+    DELETE /api/containers/{id}
+    GET /api/containers/{id}/logs
+    </pre>
+  </body>
+</html>
+

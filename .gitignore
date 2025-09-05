@@ -1,0 +1,5 @@
+venv/
+*.backup
+*.old
+.env
+*.db
