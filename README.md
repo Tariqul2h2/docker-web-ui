@@ -12,7 +12,6 @@ This is a simple web-based dashboard to manage Docker containers and images.
 - Supports specifying image version and port mapping
 
 ## Prerequisites
-- Python 3.8+  
 - Docker installed and running  
 - Add your user to the `docker` group to run Docker without `sudo`:
   ```bash
@@ -24,7 +23,8 @@ This is a simple web-based dashboard to manage Docker containers and images.
 Log out and log back in (or run `newgrp docker`) to apply changes.
 
 
-## Installation
+## Installation 
+### Option 1
 <!-- Simpley install using apt repository
 ```
 sudo apt update
@@ -40,11 +40,24 @@ pip install -r requirements.txt
 python app.py
 ```
 This will run in `0.0.0.0:5000`
+> Note: Create a service file to run it in background
+
+### Option 2
+Run the following command:  
+Option 1: [defaults: port 5000, user: admin, password:admin123]
+```
+docker run -v /var/run/docker.sock:/var/run/docker.sock tariqul2h2/dockerwebui:latest
+```
+
+Option 2: [#DIY]
+```
+docker run -d -p 5000:5000 -v /var/run/docker.sock:/var/run/docker.sock -e ADMIN_USER=superuser -e ADMIN_PASS=superpass -e PORT=5000 tariqul2h2/dockerwebui:latest
+```
+
 
 Now open your Browser, manage your containers.
 
 Happy Containering...
 
-> Note: Create a service file to run it in background, you can create an issue here if you want me to create the service file.
 
 >Thank you so much for your attention
