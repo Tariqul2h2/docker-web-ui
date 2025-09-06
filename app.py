@@ -9,7 +9,8 @@ app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET", "change-this")
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=8)
 jwt = JWTManager(app)
 
-docker_client = docker.DockerClient(base_url="unix:///run/docker.sock")
+base_url = os.getenv("DOCKER_HOST", "unix:///var/run/docker.sock")
+docker_client = docker.DockerClient(base_url=base_url)
 try:
     docker_client.ping()
 except Exception as e:
@@ -50,9 +51,12 @@ def find_user(username):
     conn.close()
     return {"username": row[0], "password": row[1], "role": row[2]} if row else None
 
+# Ensure admin user exists
 init_db()
-if not find_user("admin"):
-    add_user("admin", "admin123", role="admin")
+admin_user = os.environ.get("ADMIN_USER", "admin")
+admin_pass = os.environ.get("ADMIN_PASS", "admin123")
+if not find_user(admin_user):
+    add_user(admin_user, admin_pass, role="admin")
 
 # ---------------- Auth ----------------
 @app.route("/login", methods=["GET","POST"])
@@ -191,5 +195,7 @@ def api_remove_image(tag):
         return jsonify({"msg": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    host = os.getenv("HOST", "0.0.0.0")   # default listen everywhere
+    port = int(os.getenv("PORT", 5000))   # default port 5000
+    app.run(host=host, port=port, debug=True)
 
